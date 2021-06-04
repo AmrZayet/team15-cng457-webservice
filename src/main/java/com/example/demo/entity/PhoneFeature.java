@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Data
@@ -18,8 +19,10 @@ public class PhoneFeature {
     PhoneFeatureID id;
 
     @ManyToOne
+    @JoinColumn(name = "phoneID", insertable = false, updatable = false)
     private Phone phone;
 
     @ManyToOne
-    private AdditionalFeature feature;
+    @JoinColumn(name = "featureID", insertable = false, updatable = false)
+    private Feature feature;
 }

@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="AdditionalFeature")
-public class AdditionalFeature {
+@Table(name="Feature")
+public class Feature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

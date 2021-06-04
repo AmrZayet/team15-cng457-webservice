@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Data
@@ -19,9 +20,10 @@ public class ComputerFeature {
     ComputerFeatureID id;
 
     @ManyToOne
+    @JoinColumn(name = "computerID", insertable = false, updatable = false)
     private Computer computer;
 
-    @ManyToOne
-    private AdditionalFeature feature;
+    @ManyToOne@JoinColumn(name = "featureID", insertable = false, updatable = false)
+    private Feature feature;
 
 }

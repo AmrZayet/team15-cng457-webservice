@@ -19,7 +19,7 @@ public class Computer {
     private String brand;
     private String model;
     private float screenSize;
-    private float screenResolution;
+    private String screenResolution;
     private String processor;
     private int memory;
     private float storageCapacity;
