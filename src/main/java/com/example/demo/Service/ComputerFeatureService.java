@@ -18,7 +18,7 @@ public class ComputerFeatureService {
         return computerFeatureRepository.save(cf);
     }
 
-    public ComputerFeature saveComputerFeatures(int computerId, int featureId) {
+    public ComputerFeature saveComputerFeature(int computerId, int featureId) {
         ComputerFeature tmp = new ComputerFeature();
         tmp.setId(new ComputerFeatureID(computerId, featureId));
         return computerFeatureRepository.save(tmp);

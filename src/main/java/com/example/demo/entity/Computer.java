@@ -29,11 +29,14 @@ public class Computer {
     private float price;
 
 
-
-
     @OneToMany(targetEntity = Review.class, cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     @OneToMany(mappedBy= "computer", cascade= CascadeType.ALL)
     private List<ComputerFeature> computerFeatures;
+
+
+    public void addReview(Review r) {
+        reviews.add(r);
+    }
 }

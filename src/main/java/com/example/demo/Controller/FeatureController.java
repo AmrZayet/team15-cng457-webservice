@@ -36,4 +36,9 @@ public class FeatureController {
     public String deleteFeature(@PathVariable int id) {
         return featureService.deleteFeature(id);
     }
+
+    @GetMapping("/getFeature/featureName={name}")
+    public Feature getFeatureByfeatureName(@PathVariable String name) {
+        return featureService.getFeatureByfeatureName(name);
+    }
 }

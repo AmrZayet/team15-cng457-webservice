@@ -35,4 +35,12 @@ public class FeatureService {
         return String.format("Feature %d is deleted",featureID);
     }
 
+    public Feature getFeatureByfeatureName(String name) {
+        List<Feature> featureList = featureRepository.findByfeatureNameContains(name);
+        if(featureList.size() == 0) {
+            return null;
+        }
+        return featureList.get(0);
+    }
+
 }

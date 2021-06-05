@@ -40,6 +40,12 @@ public class ComputerService {
         return String.format("Computer %d is deleted", computerID);
     }
 
-
-
+    public Computer addReview(int id, Review r) {
+        Computer tmp = computerRepository.findById(id).orElse(null);
+        if (tmp == null) {
+            return null;
+        }
+        tmp.addReview(r);
+        return computerRepository.save(tmp);
+    }
 }

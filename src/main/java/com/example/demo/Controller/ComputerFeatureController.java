@@ -19,7 +19,7 @@ public class ComputerFeatureController {
 
     @PostMapping("/addComputerFeature/com={computerId}+feat={featureId}")
     public ComputerFeature addComputerFeature(@PathVariable int computerId, @PathVariable int featureId) {
-        return computerFeatureService.saveComputerFeatures(computerId, featureId);
+        return computerFeatureService.saveComputerFeature(computerId, featureId);
     }
 
     @PostMapping("/addComputerFeatures")
