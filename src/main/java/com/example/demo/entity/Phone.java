@@ -30,4 +30,7 @@ public class Phone {
     @OneToMany(mappedBy= "phone", cascade= CascadeType.ALL)
     private List<PhoneFeature> phoneFeatures;
 
+    public void addReview(Review r) {
+        reviews.add(r);
+    }
 }
