@@ -1,8 +1,9 @@
 package com.example.demo.Service;
 
+import com.example.demo.Repository.ComputerFeatureRepository;
 import com.example.demo.Repository.ComputerRepository;
-import com.example.demo.entity.Computer;
-import com.example.demo.entity.Review;
+import com.example.demo.Repository.FeatureRepository;
+import com.example.demo.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,11 @@ import java.util.List;
 public class ComputerService {
     @Autowired
     ComputerRepository computerRepository;
+    @Autowired
+    FeatureRepository featureRepository;
+    @Autowired
+    ComputerFeatureRepository computerFeatureRepository;
+
 
     public Computer saveComputer(Computer c) {
         return computerRepository.save(c);
@@ -47,5 +53,34 @@ public class ComputerService {
         }
         tmp.addReview(r);
         return computerRepository.save(tmp);
+    }
+
+    public Computer updateComputerFeature(int id, String name) {
+
+        Computer computer = computerRepository.findById(id).orElse(null);
+        List<Feature> featureList = featureRepository.findByfeatureNameContains(name);
+        Feature feature;
+        int featureId;
+        if(featureList.size() == 0) {
+            feature = null;
+        }
+        else
+        {
+            feature = featureList.get(0);
+        }
+        if (feature == null) {
+            feature = new Feature();
+            feature.setFeatureName(name);
+            featureRepository.save(feature);
+            featureId = featureRepository.findByfeatureNameContains(name).get(0).getFeatureID();
+        }
+        else {
+            featureId = feature.getFeatureID();
+        }
+
+        ComputerFeature tmp = new ComputerFeature();
+        tmp.setId(new ComputerFeatureID(id, featureId));
+        computerFeatureRepository.save(tmp);
+        return computerRepository.findById(id).orElse(null);
     }
 }

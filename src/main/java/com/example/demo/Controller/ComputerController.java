@@ -49,20 +49,7 @@ public class ComputerController {
     // if name contains spaces it should be represented as %20
     @GetMapping("/updateComputer/{id}/feature={name}")
     public Computer updateComputerFeature(@PathVariable int id, @PathVariable String name) {
-        Computer computer = computerService.getComputer(id);
-        Feature feature = featureService.getFeatureByfeatureName(name); // get the first one (it should be one
-        int featureId;
-        if (feature == null) {
-            feature = new Feature();
-            feature.setFeatureName(name);
-            featureService.saveFeature(feature);
-            featureId = featureService.getFeatureByfeatureName(name).getFeatureID();
-        }
-        else {
-            featureId = feature.getFeatureID();
-        }
-        computerFeatureService.saveComputerFeature(id, featureId);
-        return computerService.getComputer(id);
+        return computerService.updateComputerFeature(id, name);
     }
 
     @GetMapping("/getComputer/{id}")
