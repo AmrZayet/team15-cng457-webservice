@@ -4,16 +4,12 @@ import com.example.demo.Service.ComputerFeatureService;
 import com.example.demo.Service.ComputerService;
 import com.example.demo.Service.FeatureService;
 import com.example.demo.entity.Computer;
-import com.example.demo.entity.ComputerFeature;
 import com.example.demo.entity.Feature;
 import com.example.demo.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 public class ComputerController {
@@ -84,162 +80,21 @@ public class ComputerController {
     }
 
 //    /getComputers/search/brand=Apple&screenSize=eq=17.0
-    @GetMapping("/searchComputers/base/{criteria}")
-    public List<Computer> SearchComputers(@PathVariable String criteria) {
+    @GetMapping("/searchComputers/{searchType}/{criteria}")
+    public List<Computer> SearchComputers(@PathVariable String searchType, @PathVariable String criteria) {
         if (criteria.equals("")) {
             return null;
         }
 
-        Stream<Computer> computerList = computerService.getComputers().stream();
+        List<Computer> computerList = computerService.getComputers();
+        List<Computer> searchResults = null;
 
-        String [] itemsArray = criteria.split("\\s*&\\s*");
-        List<String> searchCriterias = Arrays.asList(itemsArray);
-
-
-        for(String sc: searchCriterias) {
-            String [] arr = sc.split("\\s*=\\s*");
-            List<String> oneCrieteria = Arrays.asList(arr);
-//            System.out.println("\n\n");
-//            for(String part: oneCrieteria) {
-//                System.out.print(String.format("%s  -->", part));
-//            }
-//            System.out.println("\n\n");
-            String searchAttribute = oneCrieteria.get(0);
-            String AttributeDetails = oneCrieteria.get(1);
-
-
-            if(searchAttribute.equals("brand")) {
-                computerList = computerList.filter(comp -> comp.getBrand().contains(AttributeDetails));
-            }
-            else if(searchAttribute.equals("model")) {
-                computerList = computerList.filter(comp -> comp.getModel().contains(AttributeDetails));
-            }
-            else if(searchAttribute.equals("screenResolution")) {
-                computerList = computerList.filter(comp -> comp.getScreenResolution().contains(AttributeDetails));
-            }
-            else if(searchAttribute.equals("processor")) {
-                computerList = computerList.filter(comp -> comp.getProcessor().contains(AttributeDetails));
-            }
-            else if(searchAttribute.equals("computerID")) {
-                computerList = computerList.filter(comp -> comp.getComputerID() == Integer.parseInt(AttributeDetails));
-            }
-            else if(searchAttribute.equals("screenSize")) {
-                float tmpScreenSize = Float.parseFloat(oneCrieteria.get(2));
-
-                if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() == tmpScreenSize);
-                }
-                else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() != tmpScreenSize);
-                }
-                else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() < tmpScreenSize);
-                }
-                else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() <= tmpScreenSize);
-                }
-                else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() > tmpScreenSize);
-                }
-                else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() >= tmpScreenSize);
-                }
-                else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getScreenSize() >= tmpScreenSize && comp.getScreenSize() <= Float.parseFloat(oneCrieteria.get(3))));
-                }
-                else {
-                    return null;
-                }
-            }
-            else if(searchAttribute.equals("memory")) {
-                int tmpMemory = Integer.parseInt(oneCrieteria.get(2));
-
-                if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() == tmpMemory);
-                }
-                else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() != tmpMemory);
-                }
-                else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() < tmpMemory);
-                }
-                else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() <= tmpMemory);
-                }
-                else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() > tmpMemory);
-                }
-                else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() >= tmpMemory);
-                }
-                else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getMemory() >= tmpMemory && comp.getMemory() <= Integer.parseInt(oneCrieteria.get(3))));
-                }
-                else {
-                    return null;
-                }
-            }
-            else if(searchAttribute.equals("storageCapacity")) {
-                float tmpStorageCapacity = Float.parseFloat(oneCrieteria.get(2));
-
-                if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() == tmpStorageCapacity);
-                }
-                else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() != tmpStorageCapacity);
-                }
-                else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() < tmpStorageCapacity);
-                }
-                else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() <= tmpStorageCapacity);
-                }
-                else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() > tmpStorageCapacity);
-                }
-                else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() >= tmpStorageCapacity);
-                }
-                else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getStorageCapacity() >= tmpStorageCapacity && comp.getStorageCapacity() <= Float.parseFloat(oneCrieteria.get(3))));
-                }
-                else {
-                    return null;
-                }
-            }
-            else if(searchAttribute.equals("price")) {
-                float tmpPrice = Float.parseFloat(oneCrieteria.get(2));
-
-                if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() == tmpPrice);
-                }
-                else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() != tmpPrice);
-                }
-                else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() < tmpPrice);
-                }
-                else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() <= tmpPrice);
-                }
-                else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() > tmpPrice);
-                }
-                else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() >= tmpPrice);
-                }
-                else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getPrice() >= tmpPrice && comp.getPrice() <= Float.parseFloat(oneCrieteria.get(3))));
-                }
-                else {
-                    return null;
-                }
-            }
-
-//            System.out.println(String.format("\n\n\n %s  --> %s\n\n\n", searchAttribute, AttributeDetails));
+        if (searchType.equals("base")) {
+            searchResults = computerService.filterComputersBase(computerList, criteria);
         }
-
-        List<Computer> searchResults = computerList.collect(Collectors.toList());
+        else if (searchType.equals("add")) {
+            System.out.println("not yet");
+        }
 
         return searchResults;
     }
