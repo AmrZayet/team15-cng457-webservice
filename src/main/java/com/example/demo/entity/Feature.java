@@ -18,7 +18,7 @@ import java.util.List;
 public class Feature {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="featureID")
     private int featureID;
     private String featureName;
@@ -26,10 +26,10 @@ public class Feature {
 
 
     @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
-    private List<ComputerFeature> computers;
+    private List<ComputerFeature> computerFeatures;
 
     @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
-    private List<PhoneFeature> phones;
+    private List<PhoneFeature> phoneFeatures;
 
 
 }

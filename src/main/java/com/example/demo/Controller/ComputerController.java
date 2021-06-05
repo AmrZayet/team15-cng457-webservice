@@ -2,7 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Service.ComputerService;
 import com.example.demo.entity.Computer;
-import com.example.demo.entity.Review;
+import com.example.demo.entity.ComputerFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +16,13 @@ public class ComputerController {
 
     @PostMapping("addComputer")
     public Computer addComputer(@RequestBody Computer c) {
+//        List<ComputerFeature> computerFeatureList = c.getComputerFeatures();
+//        for (ComputerFeature cf : computerFeatureList) {
+//            System.out.println(String.format("computerID=%d, featureId=%d", cf.getId().getComputerID(), cf.getId().getFeatureID()));
+//            System.out.println(String.format("featureId=%s",cf.toString()));
+//        }
+//        System.out.println(c.toString());
+        c.setComputerFeatures(null);
         return computerService.saveComputer(c);
     }
 
