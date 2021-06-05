@@ -29,4 +29,14 @@ public class ComputerFeature {
     @ManyToOne@JoinColumn(name = "featureID", insertable = false, updatable = false)
     private Feature feature;
 
+    public int getIdComputerId() {
+        return id.getComputerID();
+    }
+
+    public int getIdFeatureId() {
+        return id.getFeatureID();
+    }
+
+
+
 }

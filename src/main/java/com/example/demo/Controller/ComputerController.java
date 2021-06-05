@@ -9,6 +9,7 @@ import com.example.demo.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -86,14 +87,25 @@ public class ComputerController {
             return null;
         }
 
-        List<Computer> computerList = computerService.getComputers();
+        List<Computer> computerList;
         List<Computer> searchResults = null;
 
         if (searchType.equals("base")) {
+            computerList = computerService.getComputers();
             searchResults = computerService.filterComputersBase(computerList, criteria);
         }
         else if (searchType.equals("add")) {
-            System.out.println("not yet");
+            searchResults = computerService.searchComputersAdditional(criteria);
+        }
+        else if (searchType.equals("both")) {
+            String [] itemsArray = criteria.split("\\s*_\\s*");
+            List<String> searchCriterias = Arrays.asList(itemsArray);
+
+            String additionalCriteria = searchCriterias.get(0);
+            String baseCriteria = searchCriterias.get(1);
+
+            computerList = computerService.searchComputersAdditional(additionalCriteria);
+            searchResults = computerService.filterComputersBase(computerList, baseCriteria);
         }
 
         return searchResults;

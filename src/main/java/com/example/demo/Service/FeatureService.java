@@ -43,4 +43,8 @@ public class FeatureService {
         return featureList.get(0);
     }
 
+    public List<Feature> getFeatureWithNameContains(String name) {
+        return featureRepository.findByfeatureNameContains(name);
+    }
+
 }
