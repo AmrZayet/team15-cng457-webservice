@@ -32,4 +32,13 @@ public class FeatureController {
         return featureService.getFeatures();
     }
 
+    @DeleteMapping("/deleteFeature/{id}")
+    public String deleteFeature(@PathVariable int id) {
+        return featureService.deleteFeature(id);
+    }
+
+    @GetMapping("/getFeature/featureName={name}")
+    public Feature getFeatureByfeatureName(@PathVariable String name) {
+        return featureService.getFeatureByfeatureName(name);
+    }
 }

@@ -1,3 +1,5 @@
+//FeatureService
+
 package com.example.demo.Service;
 
 import com.example.demo.Repository.FeatureRepository;
@@ -26,6 +28,19 @@ public class FeatureService {
 
     public List<Feature> getFeatures() {
         return featureRepository.findAll();
+    }
+
+    public String deleteFeature(int featureID) {
+        featureRepository.deleteById(featureID);
+        return String.format("Feature %d is deleted",featureID);
+    }
+
+    public Feature getFeatureByfeatureName(String name) {
+        List<Feature> featureList = featureRepository.findByfeatureNameContains(name);
+        if(featureList.size() == 0) {
+            return null;
+        }
+        return featureList.get(0);
     }
 
 }
