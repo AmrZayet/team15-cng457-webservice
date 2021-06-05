@@ -26,12 +26,6 @@ public class PhoneController {
 
     @PostMapping("addPhone")
     public Phone addPhone(@RequestBody Phone c) {
-//        List<PhoneFeature> phoneFeatureList = c.getPhoneFeatures();
-//        for (PhoneFeature cf : phoneFeatureList) {
-//            System.out.println(String.format("phoneID=%d, featureId=%d", cf.getId().getPhoneID(), cf.getId().getFeatureID()));
-//            System.out.println(String.format("featureId=%s",cf.toString()));
-//        }
-//        System.out.println(c.toString());
         c.setPhoneFeatures(null);
         return phoneService.savePhone(c);
     }
@@ -46,7 +40,7 @@ public class PhoneController {
         return phoneService.addReview(id, r);
     }
 
-    // if name contains spaces it should be represented as %20
+
     @GetMapping("/updatePhone/{id}/feature={name}")
     public Phone updatePhoneFeature(@PathVariable int id, @PathVariable String name) {
         Phone phone = phoneService.getPhone(id);
@@ -80,7 +74,7 @@ public class PhoneController {
         return phoneService.getPhones();
     }
 
-    //    /getPhones/search/brand=Apple&screenSize=eq=17.0
+
     @GetMapping("/searchPhones/{searchType}/{criteria}")
     public List<Phone> SearchPhones(@PathVariable String searchType, @PathVariable String criteria) {
         if (criteria.equals("")) {

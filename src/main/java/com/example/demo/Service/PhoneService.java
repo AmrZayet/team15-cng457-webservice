@@ -120,28 +120,28 @@ public class PhoneService {
                 }
             }
             else if(searchAttribute.equals("Internalmemory")) { //ok
-                int tmpMemory = Integer.parseInt(oneCrieteria.get(2));
+                float tmpMemory = Float.parseFloat(oneCrieteria.get(2));
 
                 if (AttributeDetails.equals("eq")) {
-                    phoneStream = phoneStream.filter(comp -> comp.getMemory() == tmpMemory);
+                    phoneStream = phoneStream.filter(comp -> comp.getInternalMemory() == tmpMemory);
                 }
                 else if (AttributeDetails.equals("ne")) {
-                    phoneStream = phoneStream.filter(comp -> comp.getMemory() != tmpMemory);
+                    phoneStream = phoneStream.filter(comp -> comp.getInternalMemory() != tmpMemory);
                 }
                 else if (AttributeDetails.equals("lt")) {
-                    phoneStream = phoneStream.filter(comp -> comp.getMemory() < tmpMemory);
+                    phoneStream = phoneStream.filter(comp -> comp.getInternalMemory() < tmpMemory);
                 }
                 else if (AttributeDetails.equals("le")) {
-                    phoneStream = phoneStream.filter(comp -> comp.getMemory() <= tmpMemory);
+                    phoneStream = phoneStream.filter(comp -> comp.getInternalMemory() <= tmpMemory);
                 }
                 else if (AttributeDetails.equals("gt")) {
-                    phoneStream = phoneStream.filter(comp -> comp.getMemory() > tmpMemory);
+                    phoneStream = phoneStream.filter(comp -> comp.getInternalMemory() > tmpMemory);
                 }
                 else if (AttributeDetails.equals("ge")) {
-                    phoneStream = phoneStream.filter(comp -> comp.getMemory() >= tmpMemory);
+                    phoneStream = phoneStream.filter(comp -> comp.getInternalMemory() >= tmpMemory);
                 }
                 else if (AttributeDetails.equals("bt")) {
-                    phoneStream = phoneStream.filter(comp -> (comp.getMemory() >= tmpMemory && comp.getMemory() <= Integer.parseInt(oneCrieteria.get(3))));
+                    phoneStream = phoneStream.filter(comp -> (comp.getInternalMemory() >= tmpMemory && comp.getInternalMemory() <= Float.parseFloat(oneCrieteria.get(3))));
                 }
                 else {
                     return null;
