@@ -57,7 +57,7 @@ public class ComputerService {
             return null;
         }
 
-        Stream<Computer> computerList = computers.stream();
+        Stream<Computer> computerStream = computers.stream();
 
         String [] itemsArray = criteria.split("\\s*&\\s*");
         List<String> searchCriterias = Arrays.asList(itemsArray);
@@ -76,43 +76,43 @@ public class ComputerService {
 
 
             if(searchAttribute.equals("brand")) {
-                computerList = computerList.filter(comp -> comp.getBrand().contains(AttributeDetails));
+                computerStream = computerStream.filter(comp -> comp.getBrand().contains(AttributeDetails));
             }
             else if(searchAttribute.equals("model")) {
-                computerList = computerList.filter(comp -> comp.getModel().contains(AttributeDetails));
+                computerStream = computerStream.filter(comp -> comp.getModel().contains(AttributeDetails));
             }
             else if(searchAttribute.equals("screenResolution")) {
-                computerList = computerList.filter(comp -> comp.getScreenResolution().contains(AttributeDetails));
+                computerStream = computerStream.filter(comp -> comp.getScreenResolution().contains(AttributeDetails));
             }
             else if(searchAttribute.equals("processor")) {
-                computerList = computerList.filter(comp -> comp.getProcessor().contains(AttributeDetails));
+                computerStream = computerStream.filter(comp -> comp.getProcessor().contains(AttributeDetails));
             }
             else if(searchAttribute.equals("computerID")) {
-                computerList = computerList.filter(comp -> comp.getComputerID() == Integer.parseInt(AttributeDetails));
+                computerStream = computerStream.filter(comp -> comp.getComputerID() == Integer.parseInt(AttributeDetails));
             }
             else if(searchAttribute.equals("screenSize")) {
                 float tmpScreenSize = Float.parseFloat(oneCrieteria.get(2));
 
                 if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() == tmpScreenSize);
+                    computerStream = computerStream.filter(comp -> comp.getScreenSize() == tmpScreenSize);
                 }
                 else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() != tmpScreenSize);
+                    computerStream = computerStream.filter(comp -> comp.getScreenSize() != tmpScreenSize);
                 }
                 else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() < tmpScreenSize);
+                    computerStream = computerStream.filter(comp -> comp.getScreenSize() < tmpScreenSize);
                 }
                 else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() <= tmpScreenSize);
+                    computerStream = computerStream.filter(comp -> comp.getScreenSize() <= tmpScreenSize);
                 }
                 else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() > tmpScreenSize);
+                    computerStream = computerStream.filter(comp -> comp.getScreenSize() > tmpScreenSize);
                 }
                 else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getScreenSize() >= tmpScreenSize);
+                    computerStream = computerStream.filter(comp -> comp.getScreenSize() >= tmpScreenSize);
                 }
                 else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getScreenSize() >= tmpScreenSize && comp.getScreenSize() <= Float.parseFloat(oneCrieteria.get(3))));
+                    computerStream = computerStream.filter(comp -> (comp.getScreenSize() >= tmpScreenSize && comp.getScreenSize() <= Float.parseFloat(oneCrieteria.get(3))));
                 }
                 else {
                     return null;
@@ -122,25 +122,25 @@ public class ComputerService {
                 int tmpMemory = Integer.parseInt(oneCrieteria.get(2));
 
                 if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() == tmpMemory);
+                    computerStream = computerStream.filter(comp -> comp.getMemory() == tmpMemory);
                 }
                 else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() != tmpMemory);
+                    computerStream = computerStream.filter(comp -> comp.getMemory() != tmpMemory);
                 }
                 else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() < tmpMemory);
+                    computerStream = computerStream.filter(comp -> comp.getMemory() < tmpMemory);
                 }
                 else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() <= tmpMemory);
+                    computerStream = computerStream.filter(comp -> comp.getMemory() <= tmpMemory);
                 }
                 else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() > tmpMemory);
+                    computerStream = computerStream.filter(comp -> comp.getMemory() > tmpMemory);
                 }
                 else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getMemory() >= tmpMemory);
+                    computerStream = computerStream.filter(comp -> comp.getMemory() >= tmpMemory);
                 }
                 else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getMemory() >= tmpMemory && comp.getMemory() <= Integer.parseInt(oneCrieteria.get(3))));
+                    computerStream = computerStream.filter(comp -> (comp.getMemory() >= tmpMemory && comp.getMemory() <= Integer.parseInt(oneCrieteria.get(3))));
                 }
                 else {
                     return null;
@@ -150,25 +150,25 @@ public class ComputerService {
                 float tmpStorageCapacity = Float.parseFloat(oneCrieteria.get(2));
 
                 if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() == tmpStorageCapacity);
+                    computerStream = computerStream.filter(comp -> comp.getStorageCapacity() == tmpStorageCapacity);
                 }
                 else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() != tmpStorageCapacity);
+                    computerStream = computerStream.filter(comp -> comp.getStorageCapacity() != tmpStorageCapacity);
                 }
                 else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() < tmpStorageCapacity);
+                    computerStream = computerStream.filter(comp -> comp.getStorageCapacity() < tmpStorageCapacity);
                 }
                 else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() <= tmpStorageCapacity);
+                    computerStream = computerStream.filter(comp -> comp.getStorageCapacity() <= tmpStorageCapacity);
                 }
                 else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() > tmpStorageCapacity);
+                    computerStream = computerStream.filter(comp -> comp.getStorageCapacity() > tmpStorageCapacity);
                 }
                 else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getStorageCapacity() >= tmpStorageCapacity);
+                    computerStream = computerStream.filter(comp -> comp.getStorageCapacity() >= tmpStorageCapacity);
                 }
                 else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getStorageCapacity() >= tmpStorageCapacity && comp.getStorageCapacity() <= Float.parseFloat(oneCrieteria.get(3))));
+                    computerStream = computerStream.filter(comp -> (comp.getStorageCapacity() >= tmpStorageCapacity && comp.getStorageCapacity() <= Float.parseFloat(oneCrieteria.get(3))));
                 }
                 else {
                     return null;
@@ -178,25 +178,25 @@ public class ComputerService {
                 float tmpPrice = Float.parseFloat(oneCrieteria.get(2));
 
                 if (AttributeDetails.equals("eq")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() == tmpPrice);
+                    computerStream = computerStream.filter(comp -> comp.getPrice() == tmpPrice);
                 }
                 else if (AttributeDetails.equals("ne")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() != tmpPrice);
+                    computerStream = computerStream.filter(comp -> comp.getPrice() != tmpPrice);
                 }
                 else if (AttributeDetails.equals("lt")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() < tmpPrice);
+                    computerStream = computerStream.filter(comp -> comp.getPrice() < tmpPrice);
                 }
                 else if (AttributeDetails.equals("le")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() <= tmpPrice);
+                    computerStream = computerStream.filter(comp -> comp.getPrice() <= tmpPrice);
                 }
                 else if (AttributeDetails.equals("gt")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() > tmpPrice);
+                    computerStream = computerStream.filter(comp -> comp.getPrice() > tmpPrice);
                 }
                 else if (AttributeDetails.equals("ge")) {
-                    computerList = computerList.filter(comp -> comp.getPrice() >= tmpPrice);
+                    computerStream = computerStream.filter(comp -> comp.getPrice() >= tmpPrice);
                 }
                 else if (AttributeDetails.equals("bt")) {
-                    computerList = computerList.filter(comp -> (comp.getPrice() >= tmpPrice && comp.getPrice() <= Float.parseFloat(oneCrieteria.get(3))));
+                    computerStream = computerStream.filter(comp -> (comp.getPrice() >= tmpPrice && comp.getPrice() <= Float.parseFloat(oneCrieteria.get(3))));
                 }
                 else {
                     return null;
@@ -206,7 +206,7 @@ public class ComputerService {
 //            System.out.println(String.format("\n\n\n %s  --> %s\n\n\n", searchAttribute, AttributeDetails));
         }
 
-        List<Computer> searchResults = computerList.collect(Collectors.toList());
+        List<Computer> searchResults = computerStream.collect(Collectors.toList());
 
         return searchResults;
     }
