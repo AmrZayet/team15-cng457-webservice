@@ -10,7 +10,10 @@ import com.example.demo.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class ComputerController {
@@ -78,6 +81,67 @@ public class ComputerController {
     @GetMapping("/getComputers")
     public List<Computer> getComputers() {
         return computerService.getComputers();
+    }
+
+//    /getComputers/search/brand=Apple&screenSize=eq=17.0
+    @GetMapping("/searchComputers/base/{criteria}")
+    public List<Computer> SearchComputers(@PathVariable String criteria) {
+        if (criteria.equals("")) {
+            return null;
+        }
+
+        Stream<Computer> computerList = computerService.getComputers().stream();
+
+        String [] itemsArray = criteria.split("\\s*&\\s*");
+        List<String> searchCriterias = Arrays.asList(itemsArray);
+
+
+        for(String sc: searchCriterias) {
+            String [] arr = sc.split("\\s*=\\s*");
+            List<String> oneCrieteria = Arrays.asList(arr);
+//            System.out.println("\n\n");
+//            for(String part: oneCrieteria) {
+//                System.out.print(String.format("%s  -->", part));
+//            }
+//            System.out.println("\n\n");
+            String searchAttribute = oneCrieteria.get(0);
+            String AttributeDetails = oneCrieteria.get(1);
+
+
+            if(searchAttribute.equals("brand")) {
+                computerList = computerList.filter(comp -> comp.getBrand().contains(AttributeDetails));
+            }
+            else if(searchAttribute.equals("model")) {
+                computerList = computerList.filter(comp -> comp.getModel().contains(AttributeDetails));
+            }
+            else if(searchAttribute.equals("screenResolution")) {
+                computerList = computerList.filter(comp -> comp.getScreenResolution().contains(AttributeDetails));
+            }
+            else if(searchAttribute.equals("processor")) {
+                computerList = computerList.filter(comp -> comp.getProcessor().contains(AttributeDetails));
+            }
+            else if(searchAttribute.equals("computerID")) {
+                computerList = computerList.filter(comp -> comp.getComputerID() == Integer.parseInt(AttributeDetails));
+            }
+            else if(searchAttribute.equals("screenSize")) {
+                computerList = computerList.filter(comp -> comp.getScreenSize() == Float.parseFloat(AttributeDetails));
+            }
+            else if(searchAttribute.equals("memory")) {
+                computerList = computerList.filter(comp -> comp.getMemory() == Integer.parseInt(AttributeDetails));
+            }
+            else if(searchAttribute.equals("storageCapacity")) {
+                computerList = computerList.filter(comp -> comp.getStorageCapacity() == Float.parseFloat(AttributeDetails));
+            }
+            else if(searchAttribute.equals("price")) {
+                computerList = computerList.filter(comp -> comp.getPrice() == Float.parseFloat(AttributeDetails));
+            }
+
+//            System.out.println(String.format("\n\n\n %s  --> %s\n\n\n", searchAttribute, AttributeDetails));
+        }
+
+        List<Computer> searchResults = computerList.collect(Collectors.toList());
+
+        return searchResults;
     }
 
     @DeleteMapping("/deleteComputer/{id}")
