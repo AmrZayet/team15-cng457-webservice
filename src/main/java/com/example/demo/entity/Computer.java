@@ -36,6 +36,42 @@ public class Computer {
     private List<ComputerFeature> computerFeatures;
 
 
+    public Computer(int computerID, String brand, String model, float screenSize, String screenResolution, String processor, int memory, float storageCapacity, float price) {
+        this.computerID = computerID;
+        this.brand = brand;
+        this.model = model;
+        this.screenSize = screenSize;
+        this.screenResolution = screenResolution;
+        this.processor = processor;
+        this.memory = memory;
+        this.storageCapacity = storageCapacity;
+        this.price = price;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public float getScreenSize() {
+        return screenSize;
+    }
+
+    public void setScreenSize(float screenSize) {
+        this.screenSize = screenSize;
+    }
+
     public void addReview(Review r) {
         reviews.add(r);
     }
