@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,30 +24,48 @@ public class ComputerService {
     @Autowired
     ComputerFeatureService computerFeatureService;
 
+    private static Lock lock = new ReentrantLock(true);
+
     public Computer saveComputer(Computer c) {
-        return computerRepository.save(c);
+        lock.lock();
+        Computer temp = computerRepository.save(c);
+        lock.unlock();
+        return temp;
     }
 
     public List<Computer> saveComputers(List<Computer> computers) {
-        return computerRepository.saveAll(computers);
+        lock.lock();
+        List<Computer> tempList = computerRepository.saveAll(computers);
+        lock.unlock();
+        return tempList;
     }
 
     public Computer getComputer(int id) {
-        return computerRepository.findById(id).orElse(null);
+        lock.lock();
+        Computer temp = computerRepository.findById(id).orElse(null);
+        lock.unlock();
+        return temp;
     }
 
     public List<Computer> getComputerByBrand(String brand) {
-//        return courseRepository.getCourseByName(name);
-//        return courseRepository.findBycourseNameContains(name);
-        return computerRepository.findBybrandContains(brand);
+        lock.lock();
+        List<Computer> tempList = computerRepository.findBybrandContains(brand);
+        lock.unlock();
+        return tempList;
     }
 
     public List<Computer> getComputers() {
-        return computerRepository.findAll();
+        lock.lock();
+        List<Computer> tempList = computerRepository.findAll();
+        lock.unlock();
+        return tempList;
     }
 
+
     public String deleteComputer(int computerID) {
+        lock.lock();
         computerRepository.deleteById(computerID);
+        lock.unlock();
         return String.format("Computer %d is deleted", computerID);
     }
 

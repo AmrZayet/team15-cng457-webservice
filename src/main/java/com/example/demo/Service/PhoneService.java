@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,29 +24,47 @@ public class PhoneService {
     @Autowired
     PhoneFeatureService phoneFeatureService;
 
+    private static Lock lock = new ReentrantLock(true);
+
     public Phone savePhone(Phone c) {
-        return phoneRepository.save(c);
+        lock.lock();
+        Phone temp = phoneRepository.save(c);
+        lock.unlock();
+        return temp;
     }
 
     public List<Phone> savePhones(List<Phone> phones) {
-        return phoneRepository.saveAll(phones);
+        lock.lock();
+        List<Phone> tempList = phoneRepository.saveAll(phones);
+        lock.unlock();
+        return tempList;
     }
 
     public Phone getPhone(int id) {
-        return phoneRepository.findById(id).orElse(null);
+        lock.lock();
+        Phone temp = phoneRepository.findById(id).orElse(null);
+        lock.unlock();
+        return temp;
     }
 
     public List<Phone> getPhoneByBrand(String brand) {
-
-        return phoneRepository.findBybrandContains(brand);
+        lock.lock();
+        List<Phone> tempList = phoneRepository.findBybrandContains(brand);
+        lock.unlock();
+        return tempList;
     }
 
     public List<Phone> getPhones() {
-        return phoneRepository.findAll();
+        lock.lock();
+        List<Phone> tempList = phoneRepository.findAll();
+        lock.unlock();
+        return tempList;
     }
 
     public String deletePhone(int phoneID) {
+        lock.lock();
         phoneRepository.deleteById(phoneID);
+        lock.unlock();
         return String.format("Phone %d is deleted", phoneID);
     }
 
